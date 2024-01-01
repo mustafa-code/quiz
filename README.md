@@ -47,6 +47,13 @@ This application is multi-tenant, meaning that it can serve multiple clients wit
 - Ability to view quiz results for all members by tenant owner, you can use [filament](https://filamentphp.com/) for this [bonus point].
 - Ability to export quiz results for all members by tenant owner to csv with filters by using queues.
     >Note: use seeders to create dummy data for exporting. minimum 20000 records.
+- Ability to view dashboards for:
+  - Number of members
+  - Attempts
+  - Pass rate
+  - Fail rate
+  - Average score
+  - Average time (for in-time quiz)
 - Create a REST API for the application, and document it using [Postman](https://www.postman.com/).
 - Write tests for the application using [pest](https://pestphp.com/), already installed.
 - write stress testing for the application using [pest](https://pestphp.com/) [bonus point].
