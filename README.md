@@ -1,7 +1,7 @@
 Assignment Blueprint for backend
 ===============================
 
-This is a Laravel blueprint for backend development, for creating a multi-tenant application to manage quizzes
+This is a Laravel blueprint for backend development, for creating a multi-tenant application **(single database)** to manage quizzes
 
 ## Installation
 - fork this repository
