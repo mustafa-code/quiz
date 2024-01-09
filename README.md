@@ -4,8 +4,8 @@ Assignment Blueprint for backend
 This is a Laravel blueprint for backend development, for creating a multi-tenant application **(single database)** to manage quizzes
 
 ## Installation
-- fork this repository
-- clone this repository `git clone git@github.com:username/assignment-blueprint-backend.git quiz`
+- clone this repository `git clone git@github.com:msaaqcom/assignment-blueprint-backend.git quiz`
+- edit origin to make new one for your custom repository in Github `git remote set-url origin` and add your repository url 
 - cd into the project directory `cd quiz`
 - run `composer install`
 - run `cp .env.example .env`
