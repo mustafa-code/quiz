@@ -19,6 +19,9 @@ return [
      */
     'central_domains' => [
         'quizzes.test',
+        '127.0.0.1',
+        'tenant1.quiz.test',
+        'tenant2.quiz.test',
     ],
 
     /**
