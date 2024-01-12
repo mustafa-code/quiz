@@ -46,3 +46,23 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/pest
+
+  deploy:
+    needs: laravel-tests
+    runs-on: ubuntu-latest
+    if: success() 
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh/
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H 209.182.238.88 >> ~/.ssh/known_hosts
+        ssh-keygen -F 209.182.238.88 || ssh-keyscan 209.182.238.88 >> ~/.ssh/known_hosts
+
+    - name: Deploy to Server
+      run: |
+        ssh shop@209.182.238.88 "cd /var/www/quiz && git pull origin main && php8.1 composer.phar install --no-dev --prefer-dist && php8.1 artisan migrate --force && npm install && npm run build"

@@ -10,6 +10,8 @@ This is a Laravel blueprint for backend development, for creating a multi-tenant
 - run `composer install`
 - run `php artisan key:generate`
 - run migration `php artisan migrate --seed`
+- run `npm install`
+- run `npm run build`
 - serve the application `php artisan serve` or use laravel valet, or any other server
 - visit the application in your browser `http://127.0.0.1:8000` 
 
