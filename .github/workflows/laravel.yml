@@ -55,15 +55,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '21'  # Set the Node.js version
-    - name: Install Node Dependencies and Build
-      run: |
-        npm install
-        npm run build
-
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh/
@@ -74,4 +65,4 @@ jobs:
 
     - name: Deploy to Server
       run: |
-        ssh shop@209.182.238.88 "cd /var/www/quiz && git pull origin main && php8.1 composer.phar install --no-dev --prefer-dist && php8.1 artisan migrate --force && npm install && npm run build"
+        ssh shop@209.182.238.88 "cd /var/www/quiz && git pull origin main && php8.1 composer.phar install --no-dev --prefer-dist && php8.1 artisan migrate --force && node -v && npm -v && npm install && npm run build"
