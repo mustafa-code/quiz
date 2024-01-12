@@ -18,10 +18,10 @@ return [
      * Only relevant if you're using the domain or subdomain identification middleware.
      */
     'central_domains' => [
-        'quizzes.test',
+        // 'quizzes.test',
         '127.0.0.1',
-        'tenant1.quiz.test',
-        'tenant2.quiz.test',
+        // 'tenant1.quiz.test',
+        // 'tenant2.quiz.test',
     ],
 
     /**
