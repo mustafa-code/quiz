@@ -4,14 +4,14 @@ Assignment Blueprint for backend
 This is a Laravel blueprint for backend development, for creating a multi-tenant application **(single database)** to manage quizzes
 
 ## Installation
-- clone this repository `git clone git@github.com:msaaqcom/assignment-blueprint-backend.git quiz`
-- edit origin to make new one for your custom repository in Github `git remote set-url origin` and add your repository url 
+- clone this repository `git@github.com:mustafa-code/quiz.git`
 - cd into the project directory `cd quiz`
-- run `composer install`
 - run `cp .env.example .env`
-- run migration `php artisan migrate`
+- run `composer install`
+- run `php artisan key:generate`
+- run migration `php artisan migrate --seed`
 - serve the application `php artisan serve` or use laravel valet, or any other server
-- visit the application in your browser `http://quiz.test` if you are using valet
+- visit the application in your browser `http://127.0.0.1:8000` 
 
 ## Multi-tenancy
 This application is multi-tenant, meaning that it can serve multiple clients with a single codebase. To achieve this, we use the [tenancyforlaravel](https://tenancyforlaravel.com/) package. The package is already installed and configured.
