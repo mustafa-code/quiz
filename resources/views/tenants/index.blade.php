@@ -29,7 +29,7 @@
                         <x-alert class="mb-8" />
 
                         <!-- Tenants Table -->
-                        <table class="min-w-full leading-normal">
+                        <table class="min-w-full leading-normal mb-4">
                             <thead>
                                 <tr>
                                     <x-table-head>
@@ -79,6 +79,8 @@
                                 @endforelse
                             </tbody>
                         </table>
+
+                        {{ $tenants->links() }}
 
                     </section>
                     
