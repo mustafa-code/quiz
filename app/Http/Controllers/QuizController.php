@@ -69,7 +69,7 @@ class QuizController extends Controller
             ]);
         } catch (\Exception $e) {
             report($e);
-            return to_route('quizzes.index')->with([
+            return to_route('quizzes.create')->with([
                 'message' => __("Error creating quiz")." {$validatedData['title']}",
                 'success' => false,
             ]);

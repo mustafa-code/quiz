@@ -23,17 +23,35 @@ class ChoiceController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Question $question)
     {
-        //
+        return view('choices.create', compact('question'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreChoiceRequest $request)
+    public function store(StoreChoiceRequest $request, Question $question)
     {
-        //
+        $validatedData = $request->validated();
+
+        try {
+            $validatedData['question_id'] = $question->id;
+            $validatedData['tenant_id'] = $question->tenant_id;
+
+            Choice::create($validatedData);
+
+            return to_route('questions.choices.index', $question)->with([
+                'message' => __("Choice created successfully!"),
+                'success' => true,
+            ]);
+        } catch (\Exception $e) {
+            report($e);
+            return to_route('questions.choices.create', $question)->with([
+                'message' => __("Error creating choice")." {$validatedData['title']}",
+                'success' => false,
+            ]);
+        }
     }
 
     /**

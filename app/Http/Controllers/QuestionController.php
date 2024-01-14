@@ -56,7 +56,7 @@ class QuestionController extends Controller
             ]);
         } catch (\Exception $e) {
             report($e);
-            return to_route('questions.index')->with([
+            return to_route('questions.create')->with([
                 'message' => __("Error creating question")." {$validatedData['question']}",
                 'success' => false,
             ]);

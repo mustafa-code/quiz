@@ -1,12 +1,12 @@
 <x-app-layout>
 
     <x-slot name="title">
-        {{ __('Create Question') }}
+        {{ __('Create Choice') }}
     </x-slot>
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Questions') }}
+            {{ __('Choices') }}
         </h2>
     </x-slot>
 
@@ -18,47 +18,48 @@
                         <header class="flex justify-between items-center mb-8">
                             <div>
                                 <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                                    {{ __('Create Question') }}
+                                    {{ __('Create Choice') }}
                                 </h2>
                     
                                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                                    {{ __("Add new question") }}
+                                    {{ __("Add new choice") }}
                                 </p>
                             </div>
                     
-                            <a href="{{ route("questions.index") }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            <a href="{{ route("questions.choices.index", $question) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 {{ __('Back') }}
                             </a>
                         </header>
 
                         <x-alert class="mb-8" />
 
-                        <div x-data="quizSelector()">
-                            <form method="post" action="{{ route('questions.store') }}" class="mt-6 space-y-6">
+                        <div>
+                            <form method="post" action="{{ route('questions.choices.store', $question) }}" class="mt-6 space-y-6">
                                 @csrf
-                        
                                 <div>
-                                    <x-input-label for="question" :value="__('Question')" />
-                                    <x-text-input id="question" name="question" type="text" class="mt-1 block w-full" :value="old('question')" required autofocus />
-                                    <x-input-error class="mt-2" :messages="$errors->get('question')" />
+                                    <x-input-label for="title" :value="__('Title')" />
+                                    <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" :value="old('title')" required autofocus />
+                                    <x-input-error class="mt-2" :messages="$errors->get('title')" />
                                 </div>
 
                                 <div>
-                                    <x-input-label for="slug" :value="__('Slug')" />
-                                    <x-text-input id="slug" name="slug" type="text" class="mt-1 block w-full" :value="old('slug')" required />
-                                    <x-input-error class="mt-2" :messages="$errors->get('slug')" />
+                                    <x-input-label for="order" :value="__('Order')" />
+                                    <x-text-input id="order" name="order" type="number" class="mt-1 block w-full" :value="old('order')" required />
+                                    <x-input-error class="mt-2" :messages="$errors->get('order')" />
                                 </div>
 
                                 <div>
-                                    <x-input-label for="tenant_id" :value="__('Tenant')" />
-                                    <x-select-options id="tenant_id" name="tenant_id" class="mt-1 block w-full" :options="$tenants" x-model="selectedTenant" required />
-                                    <x-input-error class="mt-2" :messages="$errors->get('tenant_id')" />
+                                    <label class="inline-flex items-center">
+                                        <input type="checkbox" id="is_correct" name="is_correct" class="form-checkbox w-5 h-5 text-blue-600 rounded" value="1" {{ old('is_correct') ? "checked": "" }} />
+                                        <span class="ml-2">{{ __('Correct') }}</span>
+                                    </label>
+                                    <x-input-error class="mt-2" :messages="$errors->get('is_correct')" />
                                 </div>
 
                                 <div>
-                                    <x-input-label for="quiz_id" :value="__('Quiz')" />
-                                    <x-select-options id="quiz_id" name="quiz_id" class="mt-1 block w-full" x-model="selectedQuiz" required />
-                                    <x-input-error class="mt-2" :messages="$errors->get('quiz_id')" />
+                                    <x-input-label for="explanation" :value="__('Explanation')" />
+                                    <x-text-area id="explanation" name="explanation" class="mt-1 block w-full" :value="old('explanation')" />
+                                    <x-input-error class="mt-2" :messages="$errors->get('explanation')" />
                                 </div>
 
                                 <div>

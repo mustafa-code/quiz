@@ -53,7 +53,7 @@ class TenantController extends Controller
             ]);
         } catch (\Exception $e) {
             report($e);
-            return to_route('tenants.index')->with([
+            return to_route('tenants.create')->with([
                 'message' => __("Error creating tenant")." {$validatedData['name']}",
                 'success' => false,
             ]);

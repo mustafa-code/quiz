@@ -30,6 +30,8 @@
                             </a>
                         </header>
 
+                        <x-alert class="mb-8" />
+
                         <div x-data="{ quizType: '{{ old('quiz_type', 'out-of-time') }}' }">
                             <form method="post" action="{{ route('quizzes.store') }}" class="mt-6 space-y-6">
                                 @csrf

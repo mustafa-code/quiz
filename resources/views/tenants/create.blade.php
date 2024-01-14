@@ -30,6 +30,8 @@
                             </a>
                         </header>
 
+                        <x-alert class="mb-8" />
+
                         <form method="post" action="{{ route('tenants.store') }}" class="mt-6 space-y-6">
                             @csrf
                     
