@@ -129,3 +129,28 @@ test('question can be updated', function () {
     $this->assertDatabaseHas("questions", $data);
 
 });
+
+test('question can be deleted', function () {
+    $user = User::factory()->create();
+    $tenant = Tenant::factory()->create([
+        "user_id" => $user->id,
+    ]);
+    $quiz = Quiz::factory()->create([
+        "tenant_id" => $tenant->id,
+    ]);
+    $question = Question::factory()->create([
+        'tenant_id' => $tenant->id,
+        'quiz_id' => $quiz->id,
+    ]);
+
+    $response = $this
+        ->actingAs($user)
+        ->delete(route("questions.destroy", $question));
+
+    $response->assertSessionHasNoErrors();
+    $response->assertSessionHas('success', true);
+    $response->assertRedirect(route("questions.index"));
+    $this->assertDatabaseMissing("questions", [
+        "id" => $question->id,
+    ]);
+});
