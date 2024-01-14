@@ -13,7 +13,8 @@ class QuizController extends Controller
      */
     public function index()
     {
-        $quizzes = Quiz::latest()->paginate(10);
+        $tenants = auth()->user()->tenants->pluck('id');
+        $quizzes = Quiz::whereIn("tenant_id", $tenants)->latest()->paginate(10);
         return view('quizzes.index', compact('quizzes'));
     }
 
