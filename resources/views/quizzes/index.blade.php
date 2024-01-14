@@ -1,4 +1,8 @@
 <x-app-layout>
+    <x-slot name="title">
+        {{ __('Quizzes') }}
+    </x-slot>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Quizzes') }}
@@ -53,16 +57,25 @@
                                         <x-table-data>{{ $quiz->start_time ?: "-" }}</x-table-data>
                                         <x-table-data>{{ $quiz->end_time ?: "-" }}</x-table-data>
                                         <x-table-data>
-                                            <a href="{{ route('quizzes.edit', $quiz->id) }}" class="text-blue-600 hover:text-blue-900">
-                                                {{ __("Edit") }}
-                                            </a>
-                                            <form action="{{ route('quizzes.destroy', $quiz->id) }}" method="POST" class="inline-block">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:text-red-900">
-                                                    {{ __("Delete") }}
-                                                </button>
-                                            </form>
+                                            <x-dropdown align="right" width="48">
+                                                <x-slot name="trigger">
+                                                    <x-secondary-button>{{ __("Actions") }}</x-secondary-button>
+                                                </x-slot>
+                                                <x-slot name="content">
+                                                    <x-dropdown-link :href="route('quizzes.edit', $quiz->id)">
+                                                        {{ __('Edit') }}
+                                                    </x-dropdown-link>
+                                                    <form action="{{ route('quizzes.destroy', $quiz->id) }}" method="POST" class="inline-block">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <x-dropdown-link href="javascript:;"
+                                                                onclick="event.preventDefault();
+                                                                            this.closest('form').submit();">
+                                                            {{ __('Delete') }}
+                                                        </x-dropdown-link>
+                                                    </form>
+                                                </x-slot>
+                                            </x-dropdown>
                                         </x-table-data>
                                     </tr>
                                 @empty
