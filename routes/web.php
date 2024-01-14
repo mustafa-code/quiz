@@ -18,6 +18,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*
+|--------------------------------------------------------------------------
+| Dashboard Routes
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,27 +32,40 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+/*
+|--------------------------------------------------------------------------
+| Auth Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('guest')->group(base_path('routes/loginGuest.php'));
+Route::middleware('auth')->group(base_path('routes/loginAuth.php'));
+
+/*
+|--------------------------------------------------------------------------
+| Profile Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('auth')->group(base_path('routes/profile.php'));
+
+/*
+|--------------------------------------------------------------------------
+| Tenants, Quizzes, Questions, and Choices Routes
+|--------------------------------------------------------------------------
+*/
+
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
     Route::resource('tenants', TenantController::class)->except([
-        'show'
+        'show',
     ]);
-
     Route::resource('quizzes', QuizController::class)->except([
-        'show'
+        'show',
     ]);
-
     Route::resource('questions', QuestionController::class)->except([
-        'show'
+        'show',
     ]);
-
     Route::resource('questions/{question}/choices', ChoiceController::class)->except([
-        'show'
+        'show',
     ])->names("questions.choices");
-
 });
-
-require __DIR__.'/auth.php';

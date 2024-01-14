@@ -15,15 +15,6 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('tenants.index')" :active="request()->routeIs('tenants.*')">
-                        {{ __('Tenants') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('quizzes.index')" :active="request()->routeIs('quizzes.*')">
-                        {{ __('Quizzes') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('questions.index')" :active="request()->routeIs('questions.*')">
-                        {{ __('Questions') }}
-                    </x-nav-link>
                     
                 </div>
             </div>
@@ -80,15 +71,6 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('tenants.index')" :active="request()->routeIs('tenants.*')">
-                {{ __('Tenants') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('quizzes.index')" :active="request()->routeIs('quizzes.*')">
-                {{ __('Quizzes') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('questions.index')" :active="request()->routeIs('questions.*')">
-                {{ __('Questions') }}
-            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -99,9 +81,9 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
+                <x-dropdown-link :href="route('profile.edit')">
                     {{ __('Profile') }}
-                </x-responsive-nav-link>
+                </x-dropdown-link>
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
