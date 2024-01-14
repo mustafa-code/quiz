@@ -11,6 +11,11 @@ use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
 class Question extends Model
 {
     use BelongsToTenant;
+    use HasFactory;
+
+    protected $fillable = [
+        'tenant_id', 'quiz_id', 'question', 'slug', 'description',
+    ];
 
     public function quiz(): BelongsTo
     {
