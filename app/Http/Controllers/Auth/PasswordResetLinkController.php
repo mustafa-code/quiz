@@ -33,7 +33,6 @@ class PasswordResetLinkController extends Controller
         // to send the link, we will examine the response then see the message we
         // need to show to the user. Finally, we'll send out a proper response.
 
-        // TODO: Make sending emails here queueable.
         if(tenant("id")){
             $credentials = $request->only('email');
             $credentials["tenant_id"] = tenant("id");
