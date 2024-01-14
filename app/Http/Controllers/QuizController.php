@@ -5,9 +5,21 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Quiz\StoreQuizRequest;
 use App\Http\Requests\Quiz\UpdateQuizRequest;
 use App\Models\Quiz;
+use App\Services\QuizService;
+use App\Services\TenantService;
 
 class QuizController extends Controller
 {
+
+    private TenantService $tenantService;
+    private QuizService $quizService;
+
+    public function __construct(TenantService $tenantService, QuizService $quizService)
+    {
+        $this->tenantService = $tenantService;
+        $this->quizService = $quizService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -31,22 +43,8 @@ class QuizController extends Controller
      */
     public function create()
     {
-        $tenants = auth()->user()->tenants->map(function($tenant){
-            return [
-                'id' => $tenant->id,
-                'name' => $tenant->name . "( {$tenant->domains()->first()?->domain} )",
-            ];
-        });
-        $quizTypeOptions = [
-            [
-                'id' => 'in-time',
-                'name' => 'In Time',
-            ],
-            [
-                'id' => 'out-of-time',
-                'name' => 'Out of Time',
-            ],
-        ];
+        $tenants = $this->tenantService->forLookup(auth()->user()->tenants);
+        $quizTypeOptions = $this->quizService->quizTypes();
         return view('quizzes.create', compact('tenants', 'quizTypeOptions'));
     }
 
@@ -83,22 +81,8 @@ class QuizController extends Controller
      */
     public function edit(Quiz $quiz)
     {
-        $tenants = auth()->user()->tenants->map(function($tenant){
-            return [
-                'id' => $tenant->id,
-                'name' => $tenant->name . "( {$tenant->domains()->first()?->domain} )",
-            ];
-        });
-        $quizTypeOptions = [
-            [
-                'id' => 'in-time',
-                'name' => 'In Time',
-            ],
-            [
-                'id' => 'out-of-time',
-                'name' => 'Out of Time',
-            ],
-        ];
+        $tenants = $this->tenantService->forLookup(auth()->user()->tenants);
+        $quizTypeOptions = $this->quizService->quizTypes();
         return view('quizzes.edit', compact('quiz', 'tenants', 'quizTypeOptions'));
     }
 
