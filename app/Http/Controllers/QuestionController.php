@@ -24,7 +24,7 @@ class QuestionController extends Controller
     public function index()
     {
         $tenants = auth()->user()->tenants->pluck('id');
-        $questions = Question::whereIn("tenant_id", $tenants)->latest()->paginate(10);
+        $questions = Question::withCount("choices")->whereIn("tenant_id", $tenants)->latest()->paginate(10);
         return view('questions.index', compact('questions'));
     }
 

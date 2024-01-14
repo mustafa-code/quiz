@@ -42,6 +42,7 @@
                                     <x-table-head>{{ __("Quiz") }}</x-table-head>
                                     <x-table-head>{{ __("Question") }}</x-table-head>
                                     <x-table-head>{{ __("Slug") }}</x-table-head>
+                                    <x-table-head>{{ __("Choices") }}</x-table-head>
                                     <x-table-head>{{ __("Creation Date") }}</x-table-head>
                                     <x-table-head>{{ __("Actions") }}</x-table-head>
                                 </tr>
@@ -54,6 +55,7 @@
                                         <x-table-data>{{ $question->quiz->title }}</x-table-data>
                                         <x-table-data>{{ $question->question }}</x-table-data>
                                         <x-table-data>{{ $question->slug }}</x-table-data>
+                                        <x-table-data>{{ $question->choices_count }}</x-table-data>
                                         <x-table-data>{{ $question->created_at }}</x-table-data>
                                         <x-table-data>
                                             <x-dropdown align="right" width="48">
