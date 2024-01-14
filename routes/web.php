@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChoiceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
@@ -41,6 +42,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('questions', QuestionController::class)->except([
         'show'
     ]);
+
+    Route::resource('questions/{question}/choices', ChoiceController::class)->except([
+        'show'
+    ])->names("choices");
 
 });
 

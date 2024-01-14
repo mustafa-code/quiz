@@ -62,6 +62,9 @@
                                                     <x-dropdown-link :href="route('questions.edit', $question->id)">
                                                         {{ __('Edit') }}
                                                     </x-dropdown-link>
+                                                    <x-dropdown-link :href="route('choices.index', $question)">
+                                                        {{ __('Choices') }}
+                                                    </x-dropdown-link>
                                                     <!-- Authentication -->
                                                     <form action="{{ route('questions.destroy', $question->id) }}" method="POST" class="inline-block">
                                                         @csrf
