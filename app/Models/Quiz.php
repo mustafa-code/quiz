@@ -11,8 +11,34 @@ class Quiz extends Model
 {
     use BelongsToTenant;
 
+    protected $fillable = [
+        'tenant_id',
+        'title',
+        'slug',
+        'description',
+        'quiz_type',
+        'start_time',
+        'end_time',
+    ];
+
     public function questions(): HasMany
     {
         return $this->hasMany(Question::class);
+    }
+
+    public function getQuizTypeNameAttribute()
+    {
+        return $this->quiz_type === 'in-time' ? 'In Time' : 'Out of Time';
+    }
+
+    // Check if the quiz can be started.
+    public function canStart(): bool
+    {
+        if ($this->quiz_type === 'out-of-time') {
+            return true;
+        }
+
+        $now = now();
+        return $now->between($this->start_time, $this->end_time);
     }
 }
