@@ -59,7 +59,7 @@
                                                     <x-dropdown-link :href="route('tenants.edit', $tenant->id)">
                                                         {{ __('Edit') }}
                                                     </x-dropdown-link>
-                                                    <form action="{{ route('tenants.destroy', $tenant->id) }}" method="POST" class="inline-block">
+                                                    <form action="{{ route('tenants.destroy', $tenant->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <x-dropdown-link href="javascript:;"

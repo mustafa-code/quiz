@@ -69,7 +69,7 @@
                                                         {{ __('Choices') }}
                                                     </x-dropdown-link>
 
-                                                    <form action="{{ route('questions.destroy', $question->id) }}" method="POST" class="inline-block">
+                                                    <form action="{{ route('questions.destroy', $question->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <x-dropdown-link href="javascript:;"
