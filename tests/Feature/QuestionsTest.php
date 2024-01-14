@@ -88,10 +88,10 @@ test('question edit page is displayed', function () {
 
     $response = $this
         ->actingAs($user)
-        ->get(route("questions.edit", $quiz));
+        ->get(route("questions.edit", $question));
 
     $response->assertOk();
-    $response->assertSee(route("questions.update", $quiz));
+    $response->assertSee(route("questions.update", $question));
     $response->assertSeeInOrder([$question->question, 
         $question->slug, 
         $question->description,
