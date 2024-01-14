@@ -36,6 +36,7 @@ class ChoiceController extends Controller
         $validatedData = $request->validated();
 
         try {
+            $validatedData["is_correct"] = $request->is_correct ? true: false;
             $validatedData['question_id'] = $question->id;
             $validatedData['tenant_id'] = $question->tenant_id;
 
@@ -57,24 +58,54 @@ class ChoiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Choice $choice)
+    public function edit(Question $question, Choice $choice)
     {
-        //
+        return view('choices.edit', compact('choice', 'question'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateChoiceRequest $request, Choice $choice)
+    public function update(UpdateChoiceRequest $request, Question $question, Choice $choice)
     {
-        //
+        $validatedData = $request->validated();
+
+        try {
+            $validatedData["is_correct"] = $request->is_correct ? true: false;
+            // Update quiz with validated data
+            $choice->update($validatedData);
+
+            // Redirect or return response
+            return to_route('questions.choices.edit', [$question, $choice])->with([
+                'message' => __("Choice updated successfully!"),
+                'success' => true,
+            ]);
+        } catch (\Exception $e) {
+            report($e);
+            return to_route('questions.choices.edit', [$question, $choice])->with([
+                'message' => __("Error updating choice")." {$validatedData['question']}",
+                'success' => false,
+            ]);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Choice $choice)
+    public function destroy(Question $question, Choice $choice)
     {
-        //
+        try {
+            $choice->delete();
+            $message = __("Choice deleted successfully!");
+            $success = true;
+        } catch (\Exception $e) {
+            report($e);
+            $message = __("Error deleting choice")." {$choice->title}";
+            $success = false;
+        }
+        return to_route('questions.choices.index', $question)->with([
+            'message' => $message,
+            'success' => $success,
+        ]);
     }
 }

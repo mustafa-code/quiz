@@ -21,7 +21,6 @@ class StoreChoiceRequest extends FormRequest
      */
     public function rules(): array
     {
-        // title	is_correct	order	description	explanation
         return [
             'title' => 'required|string|max:255',
             'is_correct' => 'nullable|boolean',

@@ -22,6 +22,24 @@ class Choice extends Model
         'explanation',
     ];
 
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            if ($model->is_correct) {
+                $model->question->choices()->where("id", "!=", $model->id)->update([
+                    "is_correct" => false,
+                ]);
+            }
+        });
+        static::updating(function ($model) {
+            if ($model->is_correct) {
+                $model->question->choices()->where("id", "!=", $model->id)->update([
+                    "is_correct" => false,
+                ]);
+            }
+        });
+    }
+
     public function question(): BelongsTo
     {
         return $this->belongsTo(Question::class);

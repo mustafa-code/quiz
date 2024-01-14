@@ -11,7 +11,7 @@ class UpdateChoiceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class UpdateChoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:255',
+            'is_correct' => 'nullable|boolean',
+            'order' => 'required|integer',
+            'description' => 'nullable|string',
+            'explanation' => 'nullable|string',
         ];
     }
 }
