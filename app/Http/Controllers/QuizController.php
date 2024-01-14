@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Quiz\StoreQuizRequest;
 use App\Http\Requests\Quiz\UpdateQuizRequest;
 use App\Models\Quiz;
-use Illuminate\Http\Request;
 
 class QuizController extends Controller
 {
@@ -50,6 +49,11 @@ class QuizController extends Controller
         $validatedData = $request->validated();
 
         try {
+            // Remove start_time and end_time if quiz_type is out-of-time
+            if ($validatedData['quiz_type'] === 'out-of-time') {
+                $validatedData['start_time'] = null;
+                $validatedData['end_time'] = null;
+            }
             Quiz::create($validatedData);
         
             return to_route('quizzes.index')->with([
@@ -97,6 +101,12 @@ class QuizController extends Controller
         $validatedData = $request->validated();
 
         try {
+            // Remove start_time and end_time if quiz_type is out-of-time
+            if ($validatedData['quiz_type'] === 'out-of-time') {
+                $validatedData['start_time'] = null;
+                $validatedData['end_time'] = null;
+            }
+
             // Update quiz with validated data
             $quiz->update($validatedData);
 
