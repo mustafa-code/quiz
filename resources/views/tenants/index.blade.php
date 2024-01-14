@@ -32,32 +32,20 @@
                         <table class="min-w-full leading-normal mb-4">
                             <thead>
                                 <tr>
-                                    <x-table-head>
-                                        #
-                                    </x-table-head>
-                                    <x-table-head>
-                                        {{ __("Name") }}
-                                    </x-table-head>
-                                    <x-table-head>
-                                        {{ __("Domain") }}
-                                    </x-table-head>
-                                    <x-table-head>
-                                        {{ __("Actions") }}
-                                    </x-table-head>
+                                    <x-table-head>#</x-table-head>
+                                    <x-table-head>{{ __("Name") }}</x-table-head>
+                                    <x-table-head>{{ __("Owner") }}</x-table-head>
+                                    <x-table-head>{{ __("Domain") }}</x-table-head>
+                                    <x-table-head>{{ __("Actions") }}</x-table-head>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($tenants as $key => $tenant)
                                     <tr>
-                                        <x-table-data>
-                                            {{ ($key + 1) }}
-                                        </x-table-data>
-                                        <x-table-data>
-                                            {{ $tenant->name }}
-                                        </x-table-data>
-                                        <x-table-data>
-                                            {{ $tenant->domains->first()->domain }}
-                                        </x-table-data>
+                                        <x-table-data>{{ ($key + 1) }}</x-table-data>
+                                        <x-table-data>{{ $tenant->name }}</x-table-data>
+                                        <x-table-data>{{ $tenant->user?->name }}</x-table-data>
+                                        <x-table-data>{{ $tenant->domains->first()->domain }}</x-table-data>
                                         <x-table-data>
                                             <a href="{{ route('tenants.edit', $tenant->id) }}" class="text-blue-600 hover:text-blue-900">
                                                 {{ __("Edit") }}
@@ -68,6 +56,7 @@
                                                 <button type="submit" class="text-red-600 hover:text-red-900">
                                                     {{ __("Delete") }}
                                                 </button>
+                                            </form>
                                         </x-table-data>
                                     </tr>
                                 @empty

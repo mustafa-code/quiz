@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TenantStoreRequest;
 use App\Http\Requests\TenantUpdateRequest;
 use App\Models\Tenant;
-use Illuminate\Http\Request;
+use App\Models\User;
 
 class TenantController extends Controller
 {
@@ -23,7 +23,15 @@ class TenantController extends Controller
      */
     public function create()
     {
-        return view('tenants.create');
+        // TODO: Use select2 ajax to load users, this is just for demo.
+        $users = User::all()->map(function ($user) {
+            $isCurrentUser = auth()->user()->id == $user->id;
+            return [
+                'id' => $user->id,
+                'name' => $user->name . ($isCurrentUser ? ' (You)' : ''),
+            ];
+        });
+        return view('tenants.create', compact('users'));
     }
 
     /**
@@ -37,6 +45,7 @@ class TenantController extends Controller
             // Create new tenant with validated data
             $tenant = Tenant::create([
                 'name' => $validatedData['name'],
+                'user_id' => $validatedData['user_id'],
             ]);
 
             $tenant->domains()->create([
@@ -62,7 +71,15 @@ class TenantController extends Controller
      */
     public function edit(Tenant $tenant)
     {
-        return view('tenants.edit', compact('tenant'));
+        // TODO: Use select2 ajax to load users, this is just for demo.
+        $users = User::all()->map(function ($user) {
+            $isCurrentUser = auth()->user()->id == $user->id;
+            return [
+                'id' => $user->id,
+                'name' => $user->name . ($isCurrentUser ? ' (You)' : ''),
+            ];
+        });
+        return view('tenants.edit', compact('tenant', 'users'));
     }
 
     /**
@@ -76,6 +93,7 @@ class TenantController extends Controller
             // Update tenant with validated data
             $tenant->update([
                 'name' => $validatedData['name'],
+                'user_id' => $validatedData['user_id'],
             ]);
             // Sync domains
             $tenant->domains()->update([

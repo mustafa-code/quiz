@@ -30,6 +30,7 @@ class TenantUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique('domains')->ignore($this->tenant->id, 'tenant_id'),
             ],
+            'user_id' => 'required|exists:users,id',
         ];
     }
 }

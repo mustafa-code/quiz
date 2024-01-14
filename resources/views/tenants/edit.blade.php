@@ -44,8 +44,14 @@
                                 <x-input-error class="mt-2" :messages="$errors->get('domain')" />
                             </div>
 
+                            <div>
+                                <x-input-label for="user_id" :value="__('Owner')" />
+                                <x-select-options id="user_id" name="user_id" :options="$users" :value="old('user_id', $tenant->user_id)" required />
+                                <x-input-error class="mt-2" :messages="$errors->get('user_id')" />
+                            </div>
+
                             <div class="flex items-center gap-4">
-                                <x-primary-button>{{ __('Save') }}</x-primary-button>
+                                <x-primary-button>{{ __('Edit') }}</x-primary-button>
                             </div>
                         </form>
                     

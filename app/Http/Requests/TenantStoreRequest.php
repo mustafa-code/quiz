@@ -24,6 +24,7 @@ class TenantStoreRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'domain' => 'required|string|max:255|unique:domains',
+            'user_id' => 'required|exists:users,id',
         ];
     }
 }
