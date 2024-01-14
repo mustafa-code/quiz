@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Question\StoreQuestionRequest;
+use App\Http\Requests\Question\UpdateQuestionRequest;
 use App\Models\Question;
 use App\Models\Quiz;
 use App\Services\TenantService;
@@ -65,17 +66,37 @@ class QuestionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Question $question)
     {
-        //
+        $tenantsList = auth()->user()->tenants;
+        $tenants = $this->tenantService->forLookup($tenantsList);
+
+        return view('questions.edit', compact('question', 'tenants'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateQuestionRequest $request, Question $question)
     {
-        //
+        $validatedData = $request->validated();
+
+        try {
+            // Update quiz with validated data
+            $question->update($validatedData);
+
+            // Redirect or return response
+            return to_route('questions.edit', $question)->with([
+                'message' => __("Question updated successfully!"),
+                'success' => true,
+            ]);
+        } catch (\Exception $e) {
+            report($e);
+            return to_route('questions.edit', $question)->with([
+                'message' => __("Error updating question")." {$validatedData['question']}",
+                'success' => false,
+            ]);
+        }
     }
 
     /**

@@ -33,6 +33,7 @@
                             <thead>
                                 <tr>
                                     <x-table-head>#</x-table-head>
+                                    <x-table-head>{{ __("Tenant") }}</x-table-head>
                                     <x-table-head>{{ __("Quiz") }}</x-table-head>
                                     <x-table-head>{{ __("Question") }}</x-table-head>
                                     <x-table-head>{{ __("Slug") }}</x-table-head>
@@ -44,6 +45,7 @@
                                 @forelse ($questions as $key => $question)
                                     <tr>
                                         <x-table-data>{{ ($key + 1) }}</x-table-data>
+                                        <x-table-data>{{ $question->tenant->name }}</x-table-data>
                                         <x-table-data>{{ $question->quiz->title }}</x-table-data>
                                         <x-table-data>{{ $question->question }}</x-table-data>
                                         <x-table-data>{{ $question->slug }}</x-table-data>

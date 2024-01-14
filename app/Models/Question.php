@@ -22,6 +22,11 @@ class Question extends Model
         return $this->belongsTo(Quiz::class);
     }
 
+    public function tenant() : BelongsTo
+    {
+        return $this->belongsTo(Tenant::class);
+    }
+
     public function choices(): HasMany
     {
         return $this->hasMany(Choice::class);
