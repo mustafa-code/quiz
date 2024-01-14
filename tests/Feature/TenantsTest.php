@@ -18,7 +18,7 @@ test('tenants list page is displayed', function () {
         ->get(route("tenants.index"));
 
     $response->assertOk();
-    $response->assertSeeInOrder([$tenant->name, $domain->domain]);
+    $response->assertSeeInOrder([$tenant->name, $user->name, $domain->domain]);
     $response->assertSee(route("tenants.create"));
     $response->assertViewIs("tenants.index");
 });
@@ -40,7 +40,6 @@ test('tenant can be created', function () {
     $data = [
         "name" => "Test Tenant",
         "domain" => "test.localhost",
-        "user_id" => $user->id,
     ];
 
     $response = $this
@@ -52,7 +51,7 @@ test('tenant can be created', function () {
     $response->assertRedirect(route("tenants.index"));
     $this->assertDatabaseHas("tenants", [
         "data->name" => $data["name"],
-        "data->user_id" => $data["user_id"],
+        "data->user_id" => $user->id,
     ]);
     $this->assertDatabaseHas("domains", [
         "domain" => $data["domain"],
@@ -79,7 +78,9 @@ test('tenant edit page is displayed', function () {
 
 test('tenant can be updated', function () {
     $user = User::factory()->create();
-    $tenant = Tenant::factory()->create();
+    $tenant = Tenant::factory()->create([
+        "user_id" => $user->id,
+    ]);
     $domain = Domain::factory()->create([
         "tenant_id" => $tenant->id,
     ]);
