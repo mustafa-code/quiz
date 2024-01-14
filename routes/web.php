@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\TenantController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,10 @@ Route::middleware('auth')->group(function () {
     ]);
 
     Route::resource('quizzes', QuizController::class)->except([
+        'show'
+    ]);
+
+    Route::resource('questions', QuestionController::class)->except([
         'show'
     ]);
 

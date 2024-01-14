@@ -21,6 +21,10 @@
                     <x-nav-link :href="route('quizzes.index')" :active="request()->routeIs('quizzes.*')">
                         {{ __('Quizzes') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('questions.index')" :active="request()->routeIs('questions.*')">
+                        {{ __('Questions') }}
+                    </x-nav-link>
+                    
                 </div>
             </div>
 
