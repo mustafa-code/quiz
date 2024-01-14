@@ -61,7 +61,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <x-table-data colspan="4" class="text-center">
+                                        <x-table-data colspan="5" class="text-center">
                                             {{ __("No tenants found") }}
                                         </x-table-data>
                                     </tr>
