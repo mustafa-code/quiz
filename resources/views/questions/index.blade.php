@@ -51,16 +51,29 @@
                                         <x-table-data>{{ $question->slug }}</x-table-data>
                                         <x-table-data>{{ $question->created_at }}</x-table-data>
                                         <x-table-data>
-                                            <a href="{{ route('questions.edit', $question->id) }}" class="text-blue-600 hover:text-blue-900">
-                                                {{ __("Edit") }}
-                                            </a>
-                                            <form action="{{ route('questions.destroy', $question->id) }}" method="POST" class="inline-block">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:text-red-900">
-                                                    {{ __("Delete") }}
-                                                </button>
-                                            </form>
+                                            <x-dropdown align="right" width="48">
+                                                <x-slot name="trigger">
+                                                    <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                                        {{ __("Actions") }}
+                                                    </button>
+                                                </x-slot>
+                            
+                                                <x-slot name="content">
+                                                    <x-dropdown-link :href="route('questions.edit', $question->id)">
+                                                        {{ __('Edit') }}
+                                                    </x-dropdown-link>
+                                                    <!-- Authentication -->
+                                                    <form action="{{ route('questions.destroy', $question->id) }}" method="POST" class="inline-block">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <x-dropdown-link :href="route('logout')"
+                                                                onclick="event.preventDefault();
+                                                                            this.closest('form').submit();">
+                                                            {{ __('Delete') }}
+                                                        </x-dropdown-link>
+                                                    </form>
+                                                </x-slot>
+                                            </x-dropdown>
                                         </x-table-data>
                                     </tr>
                                 @empty
