@@ -21,8 +21,6 @@ return [
         // 'quizzes.test',
         '127.0.0.1',
         'localhost',
-        // 'tenant1.quiz.test',
-        // 'tenant2.quiz.test',
     ],
 
     /**
@@ -32,7 +30,8 @@ return [
      * To configure their behavior, see the config keys below.
      */
     'bootstrappers' => [
-        Stancl\Tenancy\Bootstrappers\DatabaseTenancyBootstrapper::class,
+        // Disable the bootstrapper of database tenantcy, because we will use single database tenantcy.
+        // Stancl\Tenancy\Bootstrappers\DatabaseTenancyBootstrapper::class,
         Stancl\Tenancy\Bootstrappers\CacheTenancyBootstrapper::class,
         Stancl\Tenancy\Bootstrappers\FilesystemTenancyBootstrapper::class,
         Stancl\Tenancy\Bootstrappers\QueueTenancyBootstrapper::class,
