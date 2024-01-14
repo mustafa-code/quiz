@@ -18,6 +18,14 @@ class QuizController extends Controller
         return view('quizzes.index', compact('quizzes'));
     }
 
+    public function getQuizzesByTenant($tenant_id)
+    {
+        // TODO: Use select2 ajax for better performance, but for simplicity, we are using this.
+        $quizzes = Quiz::where("tenant_id", $tenant_id)->latest()->get();
+        // TODO: Use macro for stander response format.
+        return response()->json($quizzes);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
