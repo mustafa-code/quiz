@@ -102,8 +102,23 @@ class QuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Question $question)
     {
-        //
+        try {
+            // Delete quiz
+            $question->delete();
+        
+            // Redirect or return response
+            return to_route('questions.index')->with([
+                'message' => __("Question deleted successfully!"),
+                'success' => true,
+            ]);
+        } catch (\Exception $e) {
+            report($e);
+            return to_route('questions.index')->with([
+                'message' => __("Error deleting question")." {$question->question}",
+                'success' => false,
+            ]);
+        }
     }
 }
