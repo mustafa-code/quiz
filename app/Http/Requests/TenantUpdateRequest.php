@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Gate;
 
 class TenantUpdateRequest extends FormRequest
 {
@@ -12,7 +13,7 @@ class TenantUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return Gate::allows('update', $this->tenant);
     }
 
     /**
@@ -30,7 +31,6 @@ class TenantUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique('domains')->ignore($this->tenant->id, 'tenant_id'),
             ],
-            'user_id' => 'required|exists:users,id',
         ];
     }
 }

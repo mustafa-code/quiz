@@ -14,7 +14,9 @@ class TenantController extends Controller
      */
     public function index()
     {
-        $tenants = Tenant::latest()->paginate(10);
+        $userId = auth()->user()->id;
+        $tenants = Tenant::where("data->user_id", $userId)
+            ->latest()->paginate(10);
         return view('tenants.index', compact('tenants'));
     }
 
@@ -23,15 +25,7 @@ class TenantController extends Controller
      */
     public function create()
     {
-        // TODO: Use select2 ajax to load users, this is just for demo.
-        $users = User::all()->map(function ($user) {
-            $isCurrentUser = auth()->user()->id == $user->id;
-            return [
-                'id' => $user->id,
-                'name' => $user->name . ($isCurrentUser ? ' (You)' : ''),
-            ];
-        });
-        return view('tenants.create', compact('users'));
+        return view('tenants.create');
     }
 
     /**
@@ -45,7 +39,7 @@ class TenantController extends Controller
             // Create new tenant with validated data
             $tenant = Tenant::create([
                 'name' => $validatedData['name'],
-                'user_id' => $validatedData['user_id'],
+                'user_id' => auth()->user()->id,
             ]);
 
             $tenant->domains()->create([
@@ -71,15 +65,9 @@ class TenantController extends Controller
      */
     public function edit(Tenant $tenant)
     {
-        // TODO: Use select2 ajax to load users, this is just for demo.
-        $users = User::all()->map(function ($user) {
-            $isCurrentUser = auth()->user()->id == $user->id;
-            return [
-                'id' => $user->id,
-                'name' => $user->name . ($isCurrentUser ? ' (You)' : ''),
-            ];
-        });
-        return view('tenants.edit', compact('tenant', 'users'));
+        $this->authorize('ownsTenant', $tenant);
+
+        return view('tenants.edit', compact('tenant'));
     }
 
     /**
@@ -93,7 +81,6 @@ class TenantController extends Controller
             // Update tenant with validated data
             $tenant->update([
                 'name' => $validatedData['name'],
-                'user_id' => $validatedData['user_id'],
             ]);
             // Sync domains
             $tenant->domains()->update([
