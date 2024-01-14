@@ -40,7 +40,7 @@
 
                             <div>
                                 <x-input-label for="domain" :value="__('Domain')" />
-                                <x-text-input id="domain" name="domain" type="text" class="mt-1 block w-full" :value="old('domain', $tenant->domains->first()->domain)" required />
+                                <x-text-input id="domain" name="domain" type="text" class="mt-1 block w-full" :value="old('domain', $tenant->domains->first()?->domain)" required />
                                 <x-input-error class="mt-2" :messages="$errors->get('domain')" />
                             </div>
 

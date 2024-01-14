@@ -26,7 +26,7 @@ class QuizController extends Controller
         $tenants = auth()->user()->tenants->map(function($tenant){
             return [
                 'id' => $tenant->id,
-                'name' => $tenant->name . "( {$tenant->domains()->first()->domain} )",
+                'name' => $tenant->name . "( {$tenant->domains()->first()?->domain} )",
             ];
         });
         $quizTypeOptions = [
@@ -73,7 +73,7 @@ class QuizController extends Controller
         $tenants = auth()->user()->tenants->map(function($tenant){
             return [
                 'id' => $tenant->id,
-                'name' => $tenant->name . "( {$tenant->domains()->first()->domain} )",
+                'name' => $tenant->name . "( {$tenant->domains()->first()?->domain} )",
             ];
         });
         $quizTypeOptions = [

@@ -45,7 +45,7 @@
                                         <x-table-data>{{ ($key + 1) }}</x-table-data>
                                         <x-table-data>{{ $tenant->name }}</x-table-data>
                                         <x-table-data>{{ $tenant->user?->name }}</x-table-data>
-                                        <x-table-data>{{ $tenant->domains->first()->domain }}</x-table-data>
+                                        <x-table-data>{{ $tenant->domains->first()?->domain }}</x-table-data>
                                         <x-table-data>
                                             <a href="{{ route('tenants.edit', $tenant->id) }}" class="text-blue-600 hover:text-blue-900">
                                                 {{ __("Edit") }}
