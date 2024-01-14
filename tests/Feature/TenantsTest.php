@@ -6,7 +6,9 @@ use App\Models\User;
 
 test('tenants list page is displayed', function () {
     $user = User::factory()->create();
-    $tenant = Tenant::factory()->create();
+    $tenant = Tenant::factory()->create([
+        "user_id" => $user->id,
+    ]);
     $domain = Domain::factory()->create([
         "tenant_id" => $tenant->id,
     ]);
@@ -38,6 +40,7 @@ test('tenant can be created', function () {
     $data = [
         "name" => "Test Tenant",
         "domain" => "test.localhost",
+        "user_id" => $user->id,
     ];
 
     $response = $this
@@ -49,6 +52,7 @@ test('tenant can be created', function () {
     $response->assertRedirect(route("tenants.index"));
     $this->assertDatabaseHas("tenants", [
         "data->name" => $data["name"],
+        "data->user_id" => $data["user_id"],
     ]);
     $this->assertDatabaseHas("domains", [
         "domain" => $data["domain"],
@@ -57,7 +61,9 @@ test('tenant can be created', function () {
 
 test('tenant edit page is displayed', function () {
     $user = User::factory()->create();
-    $tenant = Tenant::factory()->create();
+    $tenant = Tenant::factory()->create([
+        "user_id" => $user->id,
+    ]);
     $domain = Domain::factory()->create([
         "tenant_id" => $tenant->id,
     ]);
@@ -83,6 +89,7 @@ test('tenant can be updated', function () {
         ->put(route("tenants.update", $tenant), [
             "name" => "Updated Tenant",
             "domain" => "updated.localhost",
+            "user_id" => $user->id,
         ]);
 
     $response->assertSessionHasNoErrors();
@@ -90,6 +97,7 @@ test('tenant can be updated', function () {
     $response->assertRedirect(route("tenants.edit", $tenant));
     $this->assertDatabaseHas("tenants", [
         "data->name" => "Updated Tenant",
+        "data->user_id" => $user->id,
     ]);
     $this->assertDatabaseHas("domains", [
         "id" => $domain->id,
@@ -100,7 +108,9 @@ test('tenant can be updated', function () {
 
 test('tenant can be deleted', function () {
     $user = User::factory()->create();
-    $tenant = Tenant::factory()->create();
+    $tenant = Tenant::factory()->create([
+        "user_id" => $user->id,
+    ]);
     $domain = Domain::factory()->create([
         "tenant_id" => $tenant->id,
     ]);
