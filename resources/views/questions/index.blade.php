@@ -62,14 +62,14 @@
                                                     <x-dropdown-link :href="route('questions.edit', $question->id)">
                                                         {{ __('Edit') }}
                                                     </x-dropdown-link>
-                                                    <x-dropdown-link :href="route('choices.index', $question)">
+                                                    <x-dropdown-link :href="route('questions.choices.index', $question)">
                                                         {{ __('Choices') }}
                                                     </x-dropdown-link>
-                                                    <!-- Authentication -->
+
                                                     <form action="{{ route('questions.destroy', $question->id) }}" method="POST" class="inline-block">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <x-dropdown-link :href="route('logout')"
+                                                        <x-dropdown-link href="javascript:;"
                                                                 onclick="event.preventDefault();
                                                                             this.closest('form').submit();">
                                                             {{ __('Delete') }}
@@ -81,7 +81,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <x-table-data colspan="6" class="text-center">
+                                        <x-table-data colspan="7" class="text-center">
                                             {{ __("No questions found") }}
                                         </x-table-data>
                                     </tr>

@@ -5,15 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Choice\StoreChoiceRequest;
 use App\Http\Requests\Choice\UpdateChoiceRequest;
 use App\Models\Choice;
+use App\Models\Question;
 
 class ChoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Question $question)
     {
-        return view('choices.index');
+        return view('choices.index', [
+            'question' => $question,
+            'choices' => $question->choices()->latest()->paginate(10),
+        ]);
     }
 
     /**

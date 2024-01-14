@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('questions/{question}/choices', ChoiceController::class)->except([
         'show'
-    ])->names("choices");
+    ])->names("questions.choices");
 
 });
 
