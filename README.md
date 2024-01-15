@@ -18,6 +18,15 @@ This is a Laravel blueprint for backend development, for creating a multi-tenant
 ## Multi-tenancy
 This application is multi-tenant, meaning that it can serve multiple clients with a single codebase. To achieve this, we use the [tenancyforlaravel](https://tenancyforlaravel.com/) package. The package is already installed and configured.
 
+## Configure Mail Credentials
+This application uses emails in many tasks, it's important to configure your mail server, always remeber to set emails vars in `.env` file.
+
+### Local Mail Credentials
+In local enviroment you can use [Mailtrap](https://mailtrap.io/), it's realy usefull for testing and development.
+
+### Production Mail Credentials
+In production you have to use an active mail server credentials.
+
 ## Configure Google Calendar
 This application integrate with google calendar to send invitations to tenant users,  to configure the integration with google calendar follow this steps in this [package](https://github.com/spatie/laravel-google-calendar?tab=readme-ov-file#how-to-obtain-the-credentials-to-communicate-with-google-calendar) and remember to store the service account credentials json file in this directory `storage/app/google-calendar/service-account-credentials.json`.
 
