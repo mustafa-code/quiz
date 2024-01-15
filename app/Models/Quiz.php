@@ -41,7 +41,7 @@ class Quiz extends Model
     }
 
     // Check if the quiz can be started.
-    public function canStart(): bool
+    public function getSubscribableAttribute(): bool
     {
         if ($this->quiz_type === 'out-of-time') {
             return true;

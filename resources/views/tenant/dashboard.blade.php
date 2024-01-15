@@ -54,10 +54,12 @@
                                         <x-table-data>
                                             @if ($quiz->is_subscribed)
                                                 <span>{{ __("Subscribed") }}</span>
-                                            @else
+                                            @elseif ($quiz->subscribable)
                                                 <a href="{{ route("quiz.subscribe", $quiz) }}" class="bg-gray-500 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded">
                                                     {{ __('Subscribe') }}
                                                 </a>
+                                            @else
+                                                <span>{{ __("Closed") }}</span>
                                             @endif
                                         </x-table-data>
                                     </tr>
