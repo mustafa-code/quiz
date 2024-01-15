@@ -1,6 +1,7 @@
 <!-- Quiz Form Start -->
-<form action="/submit-quiz" method="POST">
-
+<form action="{{ route('quiz.submit', $quizSubscriber) }}" method="POST">
+    @csrf
+    <input type="hidden" name="quiz_attempt_id" value="{{ $quizAttempt->id }}">
     <!-- Loop through questions -->
     @foreach ($quiz->questions as $key => $question)
         <div class="mb-4">
@@ -9,7 +10,7 @@
                 <!-- Loop through choices for each question -->
                 @foreach ($question->choices as $choice)
                 <label class="block">
-                    <input type="radio" name="question1" value="choice1" class="mr-2">
+                    <input type="radio" name="question[{{ $question->id }}]" value="{{ $choice->id }}" class="mr-2" required>
                     {{ $choice->title }}
                 </label>
                 @endforeach

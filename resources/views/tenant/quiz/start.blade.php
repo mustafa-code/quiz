@@ -1,12 +1,12 @@
 <x-app-layout>
 
     <x-slot name="title">
-        {{ __('Tenant') }}
+        {{ __('Quiz') }}
     </x-slot>
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Tenant Dashboard') }}
+            {{ __('Start Quiz') }}
         </h2>
     </x-slot>
 
@@ -18,7 +18,7 @@
                         <header class="flex justify-between items-center mb-8">
                             <div>
                                 <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                                    {{ __('Quiz') }}
+                                    {{ __('Quiz') }}: {{ $quizSubscriber->quiz->title }}
                                 </h2>
                                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                                     {{ __("Take a deep breath and answer all the questions bellow.") }}

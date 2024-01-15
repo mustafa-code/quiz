@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Quiz\AttemptQuizRequest;
 use App\Http\Requests\Quiz\SubscribeRequest;
 use App\Models\Quiz;
+use App\Models\QuizAttempt;
 use App\Models\QuizSubscriber;
 use App\Services\QuizService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class QuizController extends Controller
@@ -78,6 +81,39 @@ class QuizController extends Controller
             $query->orderBy('order', 'asc'); // Assuming 'order' is the column name
         }]);
 
-        return view('tenant.quiz.start', compact('quiz', 'quizSubscriber'));
+        $quizAttempt = QuizAttempt::create([
+            'quiz_id' => $quiz->id,
+            'tenant_user_id' => auth()->user()->id,
+            'started_at' => now(),
+        ]);
+        return view('tenant.quiz.start', compact('quiz', 'quizSubscriber', 'quizAttempt'));
+    }
+
+    public function submit (AttemptQuizRequest $request, QuizSubscriber $quizSubscriber)
+    {
+        $data = $request->validated();
+
+        $quizAttempt = QuizAttempt::find($data['quiz_attempt_id']);
+
+        foreach($data['question'] as $questionId => $choiceId) {
+            $quizAttempt->userAnswers()->create([
+                'question_id' => $questionId,
+                'choice_id' => $choiceId,
+            ]);
+        }
+        $quizAttempt->calculateScore();
+
+        $quizAttempt->update([
+            'completed_at' => now(),
+        ]);
+
+        $this->quizService->sendResult($quizAttempt);
+
+        // Return to result page.
+        return redirect()->route('quiz.result', ['quizAttempt' => $quizAttempt]);
+    }
+
+    public function result(QuizAttempt $quizAttempt){
+        return view('tenant.quiz.result', compact('quizAttempt'));
     }
 }
