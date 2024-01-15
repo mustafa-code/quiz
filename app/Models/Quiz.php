@@ -54,7 +54,7 @@ class Quiz extends Model
     public function subscribers()
     {
         return $this->belongsToMany(TenantUser::class, 'quiz_subscribers', 'quiz_id', 'tenant_user_id')
-            ->withPivot('attend_time', 'event_id');
+            ->withPivot('attend_time', 'event_id', 'id', 'created_at', 'updated_at');
     }
 
     public function getIsSubscribedAttribute()

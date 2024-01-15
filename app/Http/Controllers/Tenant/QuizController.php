@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Quiz\SubscribeRequest;
 use App\Models\Quiz;
 use App\Services\QuizService;
+use Illuminate\Support\Str;
 
 class QuizController extends Controller
 {
@@ -21,6 +22,7 @@ class QuizController extends Controller
         try {
             $user = auth()->user();
             $quiz->subscribers()->attach($user->id, [
+                'id' => Str::uuid()->toString(),
                 'attend_time' => $request->attend_time,
                 'created_at' => now(),
                 'updated_at' => now(),
