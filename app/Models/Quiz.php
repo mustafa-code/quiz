@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
+use Illuminate\Support\Facades\Auth;
 
 class Quiz extends Model
 {
@@ -22,6 +23,7 @@ class Quiz extends Model
         'start_time',
         'end_time',
     ];
+    protected $appends = ['is_subscribed'];
 
     public function tenant(): BelongsTo
     {
@@ -47,5 +49,18 @@ class Quiz extends Model
 
         $now = now();
         return $now->between($this->start_time, $this->end_time);
+    }
+
+    public function subscribers()
+    {
+        return $this->belongsToMany(TenantUser::class, 'quiz_subscribers', 'quiz_id', 'tenant_user_id');
+    }
+
+    public function getIsSubscribedAttribute()
+    {
+        if (Auth::check()) {
+            return $this->subscribers->contains(Auth::id());
+        }
+        return false;
     }
 }

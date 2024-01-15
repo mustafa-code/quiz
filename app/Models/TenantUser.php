@@ -46,4 +46,9 @@ class TenantUser extends Authenticatable
         $this->notify((new ResetPasswordNotification($token))->onQueue('emails'));
     }
 
+    public function subscribedQuizzes()
+    {
+        return $this->belongsToMany(Quiz::class, 'quiz_subscribers', 'tenant_user_id', 'quiz_id');
+    }
+
 }
