@@ -70,14 +70,14 @@ class QuizController extends Controller
         ]);
     }
 
-    public function start($subscription)
+    public function start(QuizSubscriber $quizSubscriber)
     {
-        $quizSubscriber = QuizSubscriber::with(['quiz', 'tenantUser'])->findOrFail($subscription);
-
         $this->authorize('view', $quizSubscriber);
 
-        return view('tenant.quiz.start', [
-            'quiz' => $quizSubscriber->quiz,
-        ]);
+        $quiz = $quizSubscriber->quiz->load(['questions.choices' => function ($query) {
+            $query->orderBy('order', 'asc'); // Assuming 'order' is the column name
+        }]);
+
+        return view('tenant.quiz.start', compact('quiz', 'quizSubscriber'));
     }
 }

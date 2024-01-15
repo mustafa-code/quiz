@@ -51,7 +51,7 @@ Route::middleware([
     */
     Route::post('/quiz/{quiz}/subscribe', [QuizController::class, 'subscribe'])->middleware("auth:tenant")->name('quiz.subscribe');
     Route::get('/quiz/{quiz}/un_subscribe', [QuizController::class, 'un_subscribe'])->middleware("auth:tenant")->name('quiz.un_subscribe');
-    Route::get('/quiz/{subscription}/start', [QuizController::class, 'start'])->middleware("auth:tenant")->name('quiz.start');
+    Route::get('/quiz/{quizSubscriber}/start', [QuizController::class, 'start'])->middleware("auth:tenant")->name('quiz.start');
 
     /*
     |--------------------------------------------------------------------------

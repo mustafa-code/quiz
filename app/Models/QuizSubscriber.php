@@ -39,4 +39,11 @@ class QuizSubscriber extends Model
     {
         return $this->belongsTo(TenantUser::class);
     }
+
+    // Add a function to check if the quiz should start or attend time not passed yet.
+    public function shouldStart()
+    {
+        return now()->greaterThan($this->attend_time);
+    }
+
 }

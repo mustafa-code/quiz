@@ -25,19 +25,43 @@
                                 </p>
                             </div>
 
-                            <div>
-                                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                                    {{ __('Time') }}
-                                </h2>
-                                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                                    {{ __("Time") }}
-                                </p>
-                            </div>
+                            @if ($quizSubscriber->shouldStart())
+                                <div class="text-center	">
+                                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                                        {{ __('15:20') }}
+                                    </h2>
+                                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                        {{ __("Time") }}
+                                    </p>
+                                </div>
+                            @endif
                         </header>
 
+                        <hr class="mb-8">
+                        
                         <x-alert class="mb-8" />
 
-                        @include('tenant.quiz.partials.questions')
+                        {{-- Check if shoudStart --}}
+                        @if ($quizSubscriber->shouldStart())
+                            @include('tenant.quiz.partials.questions')
+                        @else
+                            <div class="text-center">
+                                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-8">
+                                    @php
+                                        $now = \Carbon\Carbon::now();
+                                        $attendTime = \Carbon\Carbon::parse($quizSubscriber->attend_time);
+                                        $minutesToStart = $attendTime->diffInMinutes($now, false);
+                                    @endphp
+                                    
+                                    {{ __('Quiz will start in') }} {{ $minutesToStart }} {{ __('minutes') }}
+                                </h2>
+
+                                <a href="" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    {{ __('Start the Quiz') }}
+                                </a>
+    
+                            </div>
+                        @endif
 
                     </section>
                     
