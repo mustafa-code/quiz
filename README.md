@@ -36,3 +36,17 @@ php artisan queue:work --queue=emails,calendar-events,default
 
 ### Production queue running:
 *To run the queue in the server for `production`, you can user [systemd service](https://tecadmin.net/running-laravel-queue-worker-as-a-systemd-service/), [pm2](https://awangt.medium.com/run-and-monitor-laravel-queue-using-pm2-dc4924372e03) or `any queue manager` to keep the queue running in the background without terminating.*
+
+## Schedule Configuration
+This application has scheduled jobs, remeber to configure the cron in your server or run the command in you local machine, to run scheduled commands.
+
+### Local schedule running:
+```
+php artisan schedule:run
+```
+### Production schedule running:
+*To run the schedule in the production just add the following command to crontab configuration in the server with every minute timming*
+
+```
+* * * * * php /path-to-your-project/artisan schedule:run >> /dev/null 2>&1
+```

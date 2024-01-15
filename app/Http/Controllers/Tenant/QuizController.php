@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Tenant;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Quiz\SubscribeRequest;
 use App\Models\Quiz;
+use App\Models\QuizSubscriber;
 use App\Services\QuizService;
 use Illuminate\Support\Str;
 
 class QuizController extends Controller
 {
     private QuizService $quizService;
-    
+
     public function __construct(QuizService $quizService)
     {
         $this->quizService = $quizService;
@@ -21,11 +22,13 @@ class QuizController extends Controller
     {
         try {
             $user = auth()->user();
+            $uuid = Str::uuid()->toString();
             $quiz->subscribers()->attach($user->id, [
-                'id' => Str::uuid()->toString(),
+                'id' => $uuid,
                 'attend_time' => $request->attend_time,
                 'created_at' => now(),
                 'updated_at' => now(),
+                'quiz_link' => route('quiz.start', ['subscription' => $uuid]),
             ]);
             $this->quizService->sendEvent($quiz->id, $user->id);
             $success = true;
@@ -64,6 +67,17 @@ class QuizController extends Controller
         return to_route('dashboard')->with([
             "message" => $message,
             "success" => $success,
+        ]);
+    }
+
+    public function start($subscription)
+    {
+        $quizSubscriber = QuizSubscriber::with(['quiz', 'tenantUser'])->findOrFail($subscription);
+
+        $this->authorize('view', $quizSubscriber);
+
+        return view('tenant.quiz.start', [
+            'quiz' => $quizSubscriber->quiz,
         ]);
     }
 }

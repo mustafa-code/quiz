@@ -48,7 +48,8 @@ class TenantUser extends Authenticatable
 
     public function subscribedQuizzes()
     {
-        return $this->belongsToMany(Quiz::class, 'quiz_subscribers', 'tenant_user_id', 'quiz_id');
+        return $this->belongsToMany(Quiz::class, 'quiz_subscribers', 'tenant_user_id', 'quiz_id')
+            ->withPivot('attend_time', 'event_id', 'id', 'created_at', 'updated_at', 'quiz_link');
     }
 
 }

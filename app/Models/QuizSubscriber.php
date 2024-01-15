@@ -13,7 +13,15 @@ class QuizSubscriber extends Model
     public $incrementing = false;
 
     protected $keyType = 'string';
-    
+    protected $fillable = [
+        'quiz_id',
+        'tenant_user_id',
+        'attend_time',
+        'event_id',
+        'reminder_sent',
+        'quiz_link',
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -22,4 +30,13 @@ class QuizSubscriber extends Model
         });
     }
 
+    public function quiz()
+    {
+        return $this->belongsTo(Quiz::class);
+    }
+
+    public function tenantUser()
+    {
+        return $this->belongsTo(TenantUser::class);
+    }
 }
