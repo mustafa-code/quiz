@@ -32,7 +32,14 @@ class CalendarEventJob implements ShouldQueue
     {
         $event = new Event();
         $event->name = "Quiz: " . $this->quiz->title;
-        $event->startDateTime = $this->startDateTime;
+        $subscription = $this->quiz->subscribers()
+            ->where('tenant_user_id', $this->tenantUser->id)
+            ->first();
+        if ($subscription) {
+            $event->startDateTime = new Carbon($subscription->pivot->attend_time);
+        } else {
+            $event->startDateTime = $this->startDateTime;
+        }
         $event->endDateTime = new Carbon($this->quiz->end_time);
 
         // TODO: Fix this when complete event creation in active domain.

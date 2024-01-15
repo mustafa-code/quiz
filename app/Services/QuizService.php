@@ -2,10 +2,8 @@
 
 namespace App\Services;
 
+use App\Jobs\CalendarDeleteEventJob;
 use App\Jobs\CalendarEventJob;
-use App\Models\Quiz;
-use App\Models\Tenant;
-use App\Models\TenantUser;
 use Carbon\Carbon;
 
 class QuizService
@@ -30,5 +28,11 @@ class QuizService
         CalendarEventJob::dispatch(
             $startDateTime, $quizId, $tenantUserId,
         )->onQueue('calendar-events');
+    }
+
+    public function deleteEvent($eventId)
+    {
+        CalendarDeleteEventJob::dispatch($eventId)
+        ->onQueue('calendar-events');
     }
 }

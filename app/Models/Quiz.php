@@ -41,7 +41,7 @@ class Quiz extends Model
     }
 
     // Check if the quiz can be started.
-    public function getSubscribableAttribute(): bool
+    public function getIsSubscribableAttribute(): bool
     {
         if ($this->quiz_type === 'out-of-time') {
             return true;
@@ -53,7 +53,8 @@ class Quiz extends Model
 
     public function subscribers()
     {
-        return $this->belongsToMany(TenantUser::class, 'quiz_subscribers', 'quiz_id', 'tenant_user_id');
+        return $this->belongsToMany(TenantUser::class, 'quiz_subscribers', 'quiz_id', 'tenant_user_id')
+            ->withPivot('attend_time', 'event_id');
     }
 
     public function getIsSubscribedAttribute()

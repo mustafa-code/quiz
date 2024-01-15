@@ -42,7 +42,8 @@ Route::middleware([
     */
     Route::get('/', [TenantController::class, 'home'])->name('home');
     Route::get('/dashboard', [TenantController::class, 'dashboard'])->middleware("auth:tenant")->name('dashboard');
-    Route::get('/quiz/{quiz}/subscribe', [QuizController::class, 'subscribe'])->middleware("auth:tenant")->name('quiz.subscribe');
+    Route::post('/quiz/{quiz}/subscribe', [QuizController::class, 'subscribe'])->middleware("auth:tenant")->name('quiz.subscribe');
+    Route::get('/quiz/{quiz}/un_subscribe', [QuizController::class, 'un_subscribe'])->middleware("auth:tenant")->name('quiz.un_subscribe');
 
     /*
     |--------------------------------------------------------------------------

@@ -17,9 +17,9 @@ class QuizPolicy
         return $quiz->subscribers->contains($user);
     }
 
-    public function subscribable(TenantUser $user, Quiz $quiz)
+    public function isSubscribable(TenantUser $user, Quiz $quiz)
     {
-        return $quiz->subscribable;
+        return $quiz->is_subscribable;
     }
 
 }
