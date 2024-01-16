@@ -31,7 +31,7 @@ class QuizController extends Controller
                 'attend_time' => $request->attend_time,
                 'created_at' => now(),
                 'updated_at' => now(),
-                'quiz_link' => route('quiz.start', ['subscription' => $uuid]),
+                'quiz_link' => route('quiz.start', $uuid),
             ]);
             $this->quizService->sendEvent($quiz->id, $user->id);
             $success = true;
