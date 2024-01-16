@@ -50,7 +50,7 @@
                                     @php
                                         $now = \Carbon\Carbon::now();
                                         $attendTime = \Carbon\Carbon::parse($quizSubscriber->attend_time);
-                                        $minutesToStart = $attendTime->diffInMinutes($now, false);
+                                        $minutesToStart = $now->diffInMinutes($attendTime, false);
                                     @endphp
                                     
                                     {{ __('Quiz will start in') }} {{ $minutesToStart }} {{ __('minutes') }}
