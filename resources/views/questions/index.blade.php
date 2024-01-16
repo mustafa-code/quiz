@@ -86,7 +86,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <x-table-data colspan="7" class="text-center">
+                                        <x-table-data colspan="8" class="text-center">
                                             {{ __("No questions found") }}
                                         </x-table-data>
                                     </tr>
